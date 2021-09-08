@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "@/views/Home.vue";
-// import Form from "@/views/Form.vue";
+import VForm from "@/views/VForm.vue";
 import VBuilder from "@/views/VBuilder.vue";
 
 const routes = [
@@ -9,11 +9,11 @@ const routes = [
         name: "home",
         component: Home,
     },
-    // {
-    //     path: "/form",
-    //     name: "form",
-    //     component: Form,
-    // },
+    {
+        path: "/form",
+        name: "form",
+        component: VForm,
+    },
     {
         path: "/builder",
         name: "builder",

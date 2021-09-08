@@ -1,84 +1,57 @@
 <script setup>
 import {
-    ref,
     onMounted,
-    defineProps,
+    onUnmounted,
+    watch,
+    // defineProps,
     getCurrentInstance,
-    withDefaults,
 } from "vue";
 
 const props = defineProps({
-    form: {},
+    components: {
+        components: [],
+        default: [],
+    },
+    options: {
+        options: {},
+        default: {},
+    },
 });
+// console.log(`[Builder] props=${JSON.stringify(props)}`);
 
-var builder = {};
-var builderReady = false;
+var builder;
+var builderReady;
 var vm = getCurrentInstance();
-// console.log(`[Builder.mounted] getCurrentInstance=${Object.keys(vm)}`);
+// console.log(`[Builder] getCurrentInstance=${Object.keys(vm)}`);
 
-onMounted(function () {
-    // console.log(`onMounted`);
-    console.log(`[Builder.onMounted] props=${JSON.stringify(props)}`);
-    if (!props.form.components) props.form.components = [];
-    if (!props.form.settings) props.form.settings = {};
+function initializeBuilder() {
+    // console.log(`[Builder.initializeBuilder] builder=${builder}`);
+    if (builder !== undefined) {
+        builder.instance.destroy(true);
+    }
     builder = new Formio.FormBuilder(
         vm.refs.formio,
         {
-            components: props.form.components,
-            settings: props.form.settings,
+            components: props.components,
+            settings: props.options,
         },
         {
             baseUrl: "",
         }
     );
-    builder.setDisplay("form").then(function (instance) {
-        instance.on("change", function (myForm) {
-            console.log(`[Builder.onChange] got change`);
-            if (myForm.components) {
-                console.log(`[Builder.onChange] has components`);
-            } else {
-                console.log(
-                    `[Builder.onChange] myForm:${Object.keys(myForm.value)}`
-                );
-                console.log(
-                    `[Builder.onChange] changed:${Object.keys(
-                        myForm.value.changed
-                    )}`
-                );
-                console.log(
-                    `[Builder.onChange] myForm:${JSON.stringify(
-                        myForm.value.data
-                    )}`
-                );
-            }
-        });
-    });
-});
-
-function initializeBuilder() {
-    if (builder !== undefined) {
-        builder.instance.destroy(true);
-    }
-    theForm.value = props.form; // ?? Should use deep clone
-    if (!theForm.value.components) theForm.value = { components: [] };
-    var options = theForm.value.settings ? theForm.value.settings : {};
-    builder = new FormioFormBuilder(vm.refs.formio, form.components, options);
     builderReady = builder.ready;
     return builderReady.then(() => {
         builder.instance.events.onAny((...args) => {
+            // console.log(`[Builder.onAny] got event`);
             const eventParts = args[0].split(".");
-
             // Only handle formio events.
-            const namespace = options.namespace || "formio";
+            const namespace = props.options.namespace || "formio";
             if (eventParts[0] !== namespace || eventParts.length !== 2) {
                 return;
             }
-
             // Remove formio. from event.
             args[0] = eventParts[1];
-
-            $emit.apply(this, args);
-
+            vm.emit.apply(this, args);
             // Emit a change event if the schema changes.
             if (
                 [
@@ -88,26 +61,38 @@ function initializeBuilder() {
                 ].includes(eventParts[1])
             ) {
                 args[0] = "change";
-                $emit.apply(this, args);
+                vm.emit.apply(vm, args);
             }
         });
     });
 }
 
-function onDestroyed() {
+onMounted(function () {
+    // console.log(`[Builder.onMounted] props=${JSON.stringify(props)}`);
+    initializeBuilder().catch((err) => {
+        console.warn(`Builder] ${err}`);
+    });
+});
+
+onUnmounted(function () {
+    // console.log(`[Builder.onUnmounted]`);
     if (builder) {
         builder.instance.destroy(true);
     }
-}
-// console.log(`script setup`);
+});
+
+// Not tested !!!
+watch(
+    () => props.components,
+    (newComp, oldComp) => {
+        console.log(`[Builder.watch] components`);
+        if (builder) {
+            builder.instance.form = newComp;
+        }
+    }
+);
 </script>
 
 <template>
     <div ref="formio"></div>
 </template>
-
-<style scoped>
-a {
-    color: #42b983;
-}
-</style>

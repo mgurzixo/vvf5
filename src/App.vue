@@ -9,10 +9,10 @@
         <li>
             <router-link to="/builder">Builder</router-link>
         </li>
-        <!-- |
+        |
         <li>
-                <router-link to="/form">Form</router-link>
-            </li> -->
+            <router-link to="/form">Form</router-link>
+        </li>
     </ul>
     <router-view />
     <!-- </div> -->
