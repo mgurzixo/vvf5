@@ -51,7 +51,8 @@ function initializeBuilder() {
             }
             // Remove formio. from event.
             args[0] = eventParts[1];
-            vm.emit.apply(this, args);
+            // console.log(`[Builder.onAny] sending formio event:${args[0]}`);
+            vm.emit.apply(vm, args);
             // Emit a change event if the schema changes.
             if (
                 [
@@ -63,6 +64,13 @@ function initializeBuilder() {
                 args[0] = "change";
                 vm.emit.apply(vm, args);
             }
+            // Create the __any event so that vue can listen on it
+            args.push({
+                eventName: args[0],
+                builder: builder,
+            });
+            args[0] = "__any";
+            vm.emit.apply(vm, args);
         });
     });
 }
@@ -85,7 +93,7 @@ onUnmounted(function () {
 watch(
     () => props.components,
     (newComp, oldComp) => {
-        console.log(`[Builder.watch] components`);
+        console.log(`[Builder.watch] components changed`);
         if (builder) {
             builder.instance.form = newComp;
         }
@@ -96,3 +104,9 @@ watch(
 <template>
     <div ref="formio"></div>
 </template>
+
+<style>
+.mg {
+    display: inline-block;
+}
+</style>
