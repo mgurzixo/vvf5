@@ -1,44 +1,85 @@
 "use strict";
-import Vue from "vue";
-import Vuex from "vuex";
+import { createStore } from "vuex";
 
-Vue.use(Vuex);
-
-export default new Vuex.Store({
+export default createStore({
     state: {
-        form: {},
-        sub: {},
+        // Warning! all getters elements MUST exist!
+        form: {
+            components: [
+                {
+                    type: "textfield",
+                    key: "firstName",
+                    label: "First Name",
+                },
+                {
+                    type: "textfield",
+                    key: "lastName",
+                    label: "Last Name",
+                },
+                {
+                    type: "button",
+                    key: "submit",
+                    label: "Submit",
+                },
+            ],
+        },
+        submission: {},
     },
     mutations: {
         setForm(state, myForm) {
+            console.log(`[store.mutations.setForm]`);
             state.form = myForm;
         },
-        setSub(state, mySub) {
+        setComponents(state, myComponents) {
+            state.form.components = myComponents;
+            console.log(`[store.mutations.setComponents]`);
+        },
+        setSubmission(state, mySubmission) {
             // Changing the state triggers an update of the
-            // form submission, accessed through getMySub
-            state.sub = mySub;
+            // form submission, accessed through submission
+            state.submission = mySubmission;
         },
     },
     actions: {
         setForm(context, myForm) {
+            console.log(`[store.actions.setForm]`);
             context.commit("setForm", myForm);
         },
-        setSub(context, mySub) {
-            console.log(`[store.setSub] mySub:${JSON.stringify(mySub)}`);
+        setComponents(context, myComponents) {
+            console.log(`[store.actions.setComponents]`);
+            context.commit("setComponents", myComponents);
+        },
+        setSubmission(context, mySub) {
+            console.log(
+                `[store.actions.setSubmission] mySub:${JSON.stringify(mySub)}`
+            );
             setTimeout(() => {
                 // Simulate a Db update taking 2 seconds
-                context.commit("setSub", mySub);
+                context.commit("setSubmission", mySub);
             }, 2000);
+        },
+        setXX(context, val) {
+            console.log(`[store.actions.setXX] ${val}`);
+        },
+        setYY(context, val) {
+            console.log(`[store.actions.setYY] ${val}`);
         },
     },
     getters: {
-        // Used for getting a console message; otherwise use mapState
-        getMyForm: (state) => {
-            console.log(`[store.getMyForm] form:${JSON.stringify(state.form)}`);
+        components: (state) => {
+            console.log(`[store.getters.components]`);
+            return state.form.components;
+        },
+        form: (state) => {
+            console.log(
+                `[store.getters.form] form:${JSON.stringify(state.form)}`
+            );
             return state.form;
         },
-        getMySub: (state) => {
-            console.log(`[store.getMySub] sub:${JSON.stringify(state.sub)}`);
+        submission: (state) => {
+            console.log(
+                `[store.getters.submission] sub:${JSON.stringify(state.sub)}`
+            );
             return state.sub;
         },
     },

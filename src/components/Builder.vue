@@ -1,5 +1,6 @@
 <script setup>
 "use strict";
+
 import {
     onMounted,
     onUnmounted,

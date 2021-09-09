@@ -1,35 +1,40 @@
 <script setup>
 "use strict";
-import Builder from "../components/Builder.vue";
-var components = [
-    {
-        type: "textfield",
-        key: "firstName",
-        label: "First Name",
-    },
-    {
-        type: "textfield",
-        key: "lastName",
-        label: "Last Name",
-    },
-    {
-        type: "button",
-        key: "submit",
-        label: "Submit",
-    },
-];
+console.log(`[VBuilder] entering`);
 
-function changed() {
-    // console.log(`[Vbuilder.changed]`);
-    // console.log(`[Vbuilder.changed] ${JSON.stringify(components)}`);
+import Builder from "../components/Builder.vue";
+import {
+    initStoreDefs,
+    components,
+    setComponents,
+    setForm,
+} from "../storeDefs";
+initStoreDefs();
+
+if (!components.value.length) {
+    // Initialize components
+    setComponents(myComponents);
+}
+function changed(event) {
+    // console.log(`[Vbuilder.changed] ${JSON.stringify(event)}`);
+    if (event.components) {
+        // console.log(`[Builder.changed] event:${Object.keys(event)}`);
+        // Dirty ;) cf. console.log...
+        // See https://help.form.io/developers/form-builder#events
+        setForm(event);
+    } else {
+        // console.log(`[Vbuilder.changed] no components`);
+    }
 }
 
 function formioEvent(...args) {
     let val = args.pop();
-    console.log(
-        `[VBuilder.formioEvent] '${val.eventName}': ${args.length} args.`
-    );
+    // console.log(
+    //     `[VBuilder.formioEvent] '${val.eventName}': ${args.length} args.`
+    // );
 }
+
+console.log(`[VBuilder] end`);
 </script>
 <template>
     <div class="home">
