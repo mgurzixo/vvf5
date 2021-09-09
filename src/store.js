@@ -58,12 +58,6 @@ export default createStore({
                 context.commit("setSubmission", mySub);
             }, 2000);
         },
-        setXX(context, val) {
-            console.log(`[store.actions.setXX] ${val}`);
-        },
-        setYY(context, val) {
-            console.log(`[store.actions.setYY] ${val}`);
-        },
     },
     getters: {
         components: (state) => {
