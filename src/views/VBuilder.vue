@@ -26,8 +26,6 @@ function changed() {
 function anyEvent(...args) {
     let val = args.pop();
     console.log(`[VBuilder.anyEvent] '${val.eventName}':${args.length} args.`);
-    // if (typeof args[1] == "object")
-    //     console.log(`[VBuilder.anyEvent] ${Object.keys(args[0])}`);
 }
 </script>
 <template>

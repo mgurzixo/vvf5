@@ -45,6 +45,23 @@ function initializeForm() {
         });
 }
 
+function addKeyEvent(comp) {
+    let elem = document.getElementById(comp.id);
+    elem.addEventListener("keydown", function (e) {
+        console.log(`${comp.key}`);
+        let e1 = new CustomEvent("formio-key", {
+            bubbles: true,
+            detail: {
+                e: e,
+                key: comp.key,
+                comp: comp,
+                instance: instance,
+            },
+        });
+        elem.dispatchEvent(e1);
+    });
+}
+
 function setupForm() {
     if (!instance) {
         return;
@@ -52,6 +69,7 @@ function setupForm() {
     if (props.submission) {
         instance.submission = props.submission;
     }
+    for (let comp of instance.components) addKeyEvent(comp);
     instance.language = props.language;
     instance.nosubmit = true;
     instance.events.onAny((...args) => {
@@ -72,12 +90,12 @@ function setupForm() {
             // console.log(`[Form.onAny] sending custom event:${args[0]}`);
             vm.emit.apply(vm, args);
         }
-        // Create the __any event so that vue can listen on it
+        // Create the formio-event event so that vue can listen on it
         args.push({
             eventName: args[0],
             formInstance: instance,
         });
-        args[0] = "__any";
+        args[0] = "formio-event";
         vm.emit.apply(vm, args);
     });
 }

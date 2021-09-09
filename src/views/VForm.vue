@@ -1,4 +1,5 @@
 <script setup>
+"use strict";
 import { ref, getCurrentInstance } from "vue";
 import Form from "../components/Form.vue";
 
@@ -26,25 +27,38 @@ var mySub = {};
 
 var options = ref({});
 
-function anyEvent(...args) {
+function mySubmit(...args) {
+    args[0].metadata = {}; // Avoid polluting console
+    console.log(
+        `[Vform.mySubmit] ${args.length} args, args[0]:${JSON.stringify(args)}`
+    );
+}
+
+function formioEvent(...args) {
     let val = args.pop();
     if (typeof args[1] == "object") {
         console.log(
-            `[Vform.anyEvent] ${val.eventName}':${
+            `[Vform.formioEvent] ${val.eventName}':${
                 args.length
             } args args[0]:${Object.keys(args[0])}`
         );
     } else {
-        console.log(`[Vform.anyEvent] '${val.eventName}':${args.length} args.`);
+        console.log(
+            `[Vform.formioEvent] '${val.eventName}':${args.length} args.`
+        );
+    }
+    switch (val.eventName) {
+        case "submit":
+            mySubmit(...args);
+            break;
     }
 }
 
-let mySubmit = (...args) => {
-    console.log(`[Vform.submit] ${args.length} args.`);
-    console.log(`[VForm.mySubmit] arg[0]:${Object.keys(args[0])}`);
-    // console.log(`[VForm.mySubmit] arg2:${JSON.stringify(args[1])}`);
-    console.log(`[Vform.mySubmit] mySub:${JSON.stringify(mySub)}`);
-};
+function formioKey(e) {
+    console.log(
+        `[VForm.formioKey] key:'${e.detail.key}' code:'${e.detail.e.code}' ctrl:${e.detail.e.ctrlKey}`
+    );
+}
 </script>
 
 <template>
@@ -53,8 +67,8 @@ let mySubmit = (...args) => {
             v-bind:src="form"
             v-bind:options="options"
             v-model:submission="mySub"
-            v-on:Xsubmit="mySubmit"
-            v-on:__any="anyEvent"
+            v-on:formio-event="formioEvent"
+            v-on:formio-key="formioKey"
         ></Form>
     </div>
 </template>
