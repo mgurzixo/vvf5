@@ -1,4 +1,5 @@
 <script setup>
+"use strict";
 import Builder from "../components/Builder.vue";
 var components = [
     {
