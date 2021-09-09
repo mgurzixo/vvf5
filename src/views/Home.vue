@@ -1,6 +1,6 @@
 <template>
     <div class="home">
-        <HelloWorld msg="Welcome to Formio+Vuejs2+Vite App" />
+        <HelloWorld msg="Welcome to Formio+Vuejs3+Vite App" />
     </div>
 </template>
 
