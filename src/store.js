@@ -23,7 +23,9 @@ export default createStore({
                 },
             ],
         },
-        submission: {},
+        submission: {
+            data: { firstName: "1", lastName: "2", submit: true },
+        },
     },
     mutations: {
         setForm(state, myForm) {
@@ -37,7 +39,9 @@ export default createStore({
         setSubmission(state, mySubmission) {
             // Changing the state triggers an update of the
             // form submission, accessed through submission
-            state.submission = mySubmission;
+            console.log(`[store.mutations.setSubmission]`);
+            // state.submission = mySubmission;
+            state.submission = {};
         },
     },
     actions: {
@@ -50,9 +54,7 @@ export default createStore({
             context.commit("setComponents", myComponents);
         },
         setSubmission(context, mySub) {
-            console.log(
-                `[store.actions.setSubmission] mySub:${JSON.stringify(mySub)}`
-            );
+            console.log(`[store.actions.setSubmission]`);
             setTimeout(() => {
                 // Simulate a Db update taking 2 seconds
                 context.commit("setSubmission", mySub);
@@ -65,16 +67,12 @@ export default createStore({
             return state.form.components;
         },
         form: (state) => {
-            console.log(
-                `[store.getters.form] form:${JSON.stringify(state.form)}`
-            );
+            console.log(`[store.getters.form]`);
             return state.form;
         },
         submission: (state) => {
-            console.log(
-                `[store.getters.submission] sub:${JSON.stringify(state.sub)}`
-            );
-            return state.sub;
+            console.log(`[store.getters.submission]`);
+            return state.submission;
         },
     },
 });

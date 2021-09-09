@@ -1,29 +1,9 @@
 <script setup>
 "use strict";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import Form from "../components/Form.vue";
-
-var form = {
-    components: [
-        {
-            type: "textfield",
-            key: "firstName",
-            label: "First Name",
-        },
-        {
-            type: "textfield",
-            key: "lastName",
-            label: "Last Name",
-        },
-        {
-            type: "button",
-            key: "submit",
-            label: "Submit",
-        },
-    ],
-};
-
-var mySub = {};
+import { initStoreDefs, form, submission, setSubmission } from "../storeDefs";
+initStoreDefs();
 
 var options = ref({});
 
@@ -32,6 +12,7 @@ function mySubmit(...args) {
     console.log(
         `[VForm.mySubmit] ${args.length} args, args[0]:${JSON.stringify(args)}`
     );
+    setSubmission(args[0]);
 }
 
 function formioEvent(...args) {
@@ -52,8 +33,13 @@ function formioEvent(...args) {
             mySubmit(...args);
             break;
     }
-}
 
+    // console.log(`[VForm] sub=${JSON.stringify(submission.value)}`);
+}
+watch(submission, (newSub, oldSub) => {
+    // console.log(`[VForm.watch.submission]`);
+    console.log(`[VForm.watch.submission] sub=${JSON.stringify(newSub)}`);
+});
 function formioKey(e) {
     console.log(
         `[VForm.formioKey] key:'${e.detail.key}' code:'${e.detail.e.code}' ctrl:${e.detail.e.ctrlKey}`
@@ -66,7 +52,7 @@ function formioKey(e) {
         <Form
             v-bind:src="form"
             v-bind:options="options"
-            v-model:submission="mySub"
+            v-bind:submission="submission"
             v-on:formio-event="formioEvent"
             v-on:formio-key="formioKey"
         ></Form>

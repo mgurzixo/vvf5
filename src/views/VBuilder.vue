@@ -11,10 +11,6 @@ import {
 } from "../storeDefs";
 initStoreDefs();
 
-if (!components.value.length) {
-    // Initialize components
-    setComponents(myComponents);
-}
 function changed(event) {
     // console.log(`[Vbuilder.changed] ${JSON.stringify(event)}`);
     if (event.components) {

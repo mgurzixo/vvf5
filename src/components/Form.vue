@@ -34,7 +34,8 @@ let vm = getCurrentInstance();
 // console.log(`[Form] getCurrentInstance=${Object.keys(vm)}`);
 
 function initializeForm() {
-    // console.log(`[Form] src=${JSON.stringify(props.src)}`);
+    // console.log(`[Form] form=${JSON.stringify(props.src)}`);
+    // console.log(`[Form] sub=${JSON.stringify(props.submission)}`);
     return new Formio.createForm(vm.refs.formio, props.src, props.options)
         .then((myInstance) => {
             instance = myInstance;
@@ -45,29 +46,9 @@ function initializeForm() {
         });
 }
 
-function addKeyEvent(comp) {
-    let elem = document.getElementById(comp.id);
-    elem.addEventListener("keydown", function (e) {
-        console.log(`${comp.key}`);
-        let e1 = new CustomEvent("formio-key", {
-            bubbles: true,
-            detail: {
-                e: e,
-                key: comp.key,
-                comp: comp,
-                instance: instance,
-            },
-        });
-        elem.dispatchEvent(e1);
-    });
-}
-
 function setupForm() {
     if (!instance) {
         return;
-    }
-    if (props.submission) {
-        instance.submission = props.submission;
     }
     for (let comp of instance.components) addKeyEvent(comp);
     instance.language = props.language;
@@ -98,7 +79,38 @@ function setupForm() {
         args[0] = "formio-event";
         vm.emit.apply(vm, args);
     });
+    if (props.submission) {
+        instance.submission = props.submission;
+    }
 }
+
+function addKeyEvent(comp) {
+    let elem = document.getElementById(comp.id);
+    elem.addEventListener("keydown", function (e) {
+        console.log(`${comp.key}`);
+        let e1 = new CustomEvent("formio-key", {
+            bubbles: true,
+            detail: {
+                e: e,
+                key: comp.key,
+                comp: comp,
+                instance: instance,
+            },
+        });
+        elem.dispatchEvent(e1);
+    });
+}
+
+watch(props.submission, (newSub, oldSub) => {
+    console.log(`[Form.watch.submission]`);
+    if (instance) {
+        // console.log(`[Form.watch.submission] ${Object.keys(instance)}`);
+        console.log(
+            `[Form.watch.submission] sub=${JSON.stringify(props.submission)}`
+        );
+        instance.submission = newSub;
+    }
+});
 
 onMounted(function () {
     initializeForm()
