@@ -23,13 +23,19 @@ function changed() {
     // console.log(`[Vbuilder.changed] ${JSON.stringify(components)}`);
 }
 
-function anyEvent(...args) {
+function formioEvent(...args) {
     let val = args.pop();
-    console.log(`[VBuilder.anyEvent] '${val.eventName}':${args.length} args.`);
+    console.log(
+        `[VBuilder.formioEvent] '${val.eventName}': ${args.length} args.`
+    );
 }
 </script>
 <template>
     <div class="home">
-        <Builder :components="components" @change="changed" @__any="anyEvent" />
+        <Builder
+            :components="components"
+            @change="changed"
+            @formio-event="formioEvent"
+        />
     </div>
 </template>

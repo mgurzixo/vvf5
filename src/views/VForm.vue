@@ -30,7 +30,7 @@ var options = ref({});
 function mySubmit(...args) {
     args[0].metadata = {}; // Avoid polluting console
     console.log(
-        `[Vform.mySubmit] ${args.length} args, args[0]:${JSON.stringify(args)}`
+        `[VForm.mySubmit] ${args.length} args, args[0]:${JSON.stringify(args)}`
     );
 }
 
@@ -38,13 +38,13 @@ function formioEvent(...args) {
     let val = args.pop();
     if (typeof args[1] == "object") {
         console.log(
-            `[Vform.formioEvent] ${val.eventName}':${
+            `[VForm.formioEvent] ${val.eventName}':${
                 args.length
             } args args[0]:${Object.keys(args[0])}`
         );
     } else {
         console.log(
-            `[Vform.formioEvent] '${val.eventName}':${args.length} args.`
+            `[VForm.formioEvent] '${val.eventName}':${args.length} args.`
         );
     }
     switch (val.eventName) {

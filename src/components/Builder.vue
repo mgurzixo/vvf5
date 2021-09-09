@@ -64,12 +64,12 @@ function initializeBuilder() {
                 args[0] = "change";
                 vm.emit.apply(vm, args);
             }
-            // Create the __any event so that vue can listen on it
+            // Create the formio-event event so that vue can listen on it
             args.push({
                 eventName: args[0],
                 builder: builder,
             });
-            args[0] = "__any";
+            args[0] = "formio-event";
             vm.emit.apply(vm, args);
         });
     });
