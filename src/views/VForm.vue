@@ -1,6 +1,6 @@
 <script setup>
 "use strict";
-import { ref, getCurrentInstance } from "vue";
+import { ref } from "vue";
 import Form from "../components/Form.vue";
 
 var form = {

@@ -1,5 +1,5 @@
 <script setup>
-import Builder from "../components/Builder.vue"; // @ is an alias to /src
+import Builder from "../components/Builder.vue";
 var components = [
     {
         type: "textfield",
@@ -36,6 +36,6 @@ function formioEvent(...args) {
             :components="components"
             @change="changed"
             @formio-event="formioEvent"
-        />
+        ></Builder>
     </div>
 </template>
