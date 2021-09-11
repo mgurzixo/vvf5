@@ -13,9 +13,11 @@ let store;
 // Tricky: useStore is not valid inside an event handler...
 export const initStoreDefs = () => (store = useStore());
 
-export const components = computed(() => store.getters.components);
-export const form = computed(() => store.getters.form);
-export const submission = computed(() => store.getters.submission);
-export const setForm = (val) => store.dispatch("setForm", val);
-export const setComponents = (val) => store.dispatch("setComponents", val);
+export const getSubmission = computed(() => store.getters.submission);
 export const setSubmission = (val) => store.dispatch("setSubmission", val);
+
+export const form = computed(() => store.getters.form);
+export const setForm = (val) => store.dispatch("setForm", val);
+
+export const components = computed(() => store.getters.components);
+export const setComponents = (val) => store.dispatch("setComponents", val);

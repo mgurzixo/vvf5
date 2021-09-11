@@ -24,7 +24,7 @@ export default createStore({
             ],
         },
         submission: {
-            data: { firstName: "1", lastName: "2", submit: true },
+            data: { firstName: "1" /* lastName: "2", submit: true*/ },
         },
     },
     mutations: {
@@ -41,7 +41,7 @@ export default createStore({
             // form submission, accessed through submission
             console.log(`[store.mutations.setSubmission]`);
             // state.submission = mySubmission;
-            state.submission = {};
+            state.submission = { data: {} };
         },
     },
     actions: {
@@ -58,7 +58,7 @@ export default createStore({
             setTimeout(() => {
                 // Simulate a Db update taking 2 seconds
                 context.commit("setSubmission", mySub);
-            }, 2000);
+            }, 1000);
         },
     },
     getters: {

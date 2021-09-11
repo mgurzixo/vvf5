@@ -1,60 +1,98 @@
-<script setup>
-"use strict";
-import { ref, watch } from "vue";
+<script>
 import Form from "../components/Form.vue";
-import { initStoreDefs, form, submission, setSubmission } from "../storeDefs";
-initStoreDefs();
+import {
+    defineComponent,
+    ref,
+    watch,
+    computed,
+    reactive,
+    isReactive,
+} from "vue";
+import store from "../store.js";
+import { reactDeepUpdate } from "../lib/reactUtils";
 
-var options = ref({});
+export default defineComponent({
+    components: {
+        Form,
+    },
+    setup(props) {
+        const getSubmission = () => {
+            let res = store.getters.submission;
+            console.log(`[VForm.getSubmission] sub=${JSON.stringify(res)}`);
+        };
+        const setSubmission = (val) => store.dispatch("setSubmission", val);
+        const form = computed(() => store.getters.form);
+        const defaultSubmission = computed(() => store.getters.submission);
 
-function mySubmit(...args) {
-    args[0].metadata = {}; // Avoid polluting console
-    console.log(
-        `[VForm.mySubmit] ${args.length} args, args[0]:${JSON.stringify(args)}`
-    );
-    setSubmission(args[0]);
-}
+        var options = ref({});
 
-function formioEvent(...args) {
-    let val = args.pop();
-    if (typeof args[1] == "object") {
-        console.log(
-            `[VForm.formioEvent] ${val.eventName}':${
-                args.length
-            } args args[0]:${Object.keys(args[0])}`
-        );
-    } else {
-        console.log(
-            `[VForm.formioEvent] '${val.eventName}':${args.length} args.`
-        );
-    }
-    switch (val.eventName) {
-        case "submit":
-            mySubmit(...args);
-            break;
-    }
+        function mySubmit(...args) {
+            args[0].metadata = {}; // Avoid polluting console
+            console.log(
+                `[VForm.mySubmit] ${args.length} args, args[0]:${JSON.stringify(
+                    args
+                )}`
+            );
+            setSubmission(args[0]);
+        }
 
-    // console.log(`[VForm] sub=${JSON.stringify(submission.value)}`);
-}
-watch(submission, (newSub, oldSub) => {
-    // console.log(`[VForm.watch.submission]`);
-    console.log(`[VForm.watch.submission] sub=${JSON.stringify(newSub)}`);
+        let submission = reactive({ data: {} });
+
+        function handleFormioEvent(...args) {
+            let val = args.pop();
+            if (typeof args[1] == "object") {
+                console.log(
+                    `[VForm.formioEvent] ${val.eventName}':${
+                        args.length
+                    } args args[0]:${Object.keys(args[0])}`
+                );
+            } else {
+                console.log(
+                    `[VForm.formioEvent] '${val.eventName}':${args.length} args.`
+                );
+            }
+            switch (val.eventName) {
+                case "submit":
+                    mySubmit(...args);
+                    break;
+            }
+        }
+
+        function handleFormioKey(e) {
+            console.log(
+                `[VForm.handlehandleFormioKey] key:'${e.detail.key}' code:'${e.detail.e.code}' ctrl:${e.detail.e.ctrlKey}`
+            );
+        }
+
+        let handleSubmission = function (event) {
+            reactDeepUpdate(submission, event.data);
+        };
+
+        // expose to template
+        return {
+            form,
+            submission,
+            defaultSubmission,
+            handleFormioEvent,
+            handleSubmission,
+            handleFormioKey,
+            options,
+        };
+    },
 });
-function formioKey(e) {
-    console.log(
-        `[VForm.formioKey] key:'${e.detail.key}' code:'${e.detail.e.code}' ctrl:${e.detail.e.ctrlKey}`
-    );
-}
 </script>
-
 <template>
     <div class="home">
         <Form
-            v-bind:src="form"
-            v-bind:options="options"
-            v-bind:submission="submission"
-            v-on:formio-event="formioEvent"
-            v-on:formio-key="formioKey"
+            :src="form"
+            :options="options"
+            :default="defaultSubmission"
+            @formio-event="handleFormioEvent"
+            @formio-key="handleFormioKey"
+            @update:submission="handleSubmission"
         ></Form>
     </div>
+    <div>res:'{{ JSON.stringify(submission) }}'</div>
+    <!-- {{ X }} -->
+    <!-- v-model="submission" -->
 </template>
