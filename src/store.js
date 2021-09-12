@@ -1,6 +1,6 @@
 "use strict";
 import { createStore } from "vuex";
-
+import { vue3DeepClone } from "./lib/vue3Utils";
 export default createStore({
     state: {
         // Warning! all getters elements MUST exist!
@@ -30,27 +30,28 @@ export default createStore({
     mutations: {
         setForm(state, myForm) {
             console.log(`[store.mutations.setForm]`);
-            state.form = myForm;
+            state.form.value = myForm;
         },
         setComponents(state, myComponents) {
-            state.form.components = myComponents;
+            state.form.components.value = myComponents;
             console.log(`[store.mutations.setComponents]`);
         },
         setSubmission(state, mySubmission) {
-            // Changing the state triggers an update of the
-            // form submission, accessed through submission
-            console.log(`[store.mutations.setSubmission]`);
-            // state.submission = mySubmission;
-            state.submission = { data: {} };
+            vue3DeepClone(state.submission, mySubmission);
+            // console.log(
+            //     `[store.mutations.setSubmission] state sub = ${JSON.stringify(
+            //         state.submission
+            //     )}`
+            // );
         },
     },
     actions: {
         setForm(context, myForm) {
-            console.log(`[store.actions.setForm]`);
+            // console.log(`[store.actions.setForm]`);
             context.commit("setForm", myForm);
         },
         setComponents(context, myComponents) {
-            console.log(`[store.actions.setComponents]`);
+            // console.log(`[store.actions.setComponents]`);
             context.commit("setComponents", myComponents);
         },
         setSubmission(context, mySub) {
@@ -63,15 +64,19 @@ export default createStore({
     },
     getters: {
         components: (state) => {
-            console.log(`[store.getters.components]`);
+            // console.log(`[store.getters.components]`);
             return state.form.components;
         },
         form: (state) => {
-            console.log(`[store.getters.form]`);
+            // console.log(`[store.getters.form]`);
             return state.form;
         },
         submission: (state) => {
-            console.log(`[store.getters.submission]`);
+            console.log(
+                `[store.getters.submission] sub=${JSON.stringify(
+                    state.submission
+                )}`
+            );
             return state.submission;
         },
     },

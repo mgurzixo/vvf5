@@ -3,40 +3,49 @@ import Form from "../components/Form.vue";
 import {
     defineComponent,
     ref,
-    watch,
     computed,
     reactive,
     isReactive,
+    watch,
+    watchEffect,
 } from "vue";
 import store from "../store.js";
-import { reactDeepUpdate } from "../lib/reactUtils";
+import { vue3DeepClone } from "../lib/vue3Utils";
 
 export default defineComponent({
     components: {
         Form,
     },
     setup(props) {
-        const getSubmission = () => {
-            let res = store.getters.submission;
-            console.log(`[VForm.getSubmission] sub=${JSON.stringify(res)}`);
-        };
         const setSubmission = (val) => store.dispatch("setSubmission", val);
-        const form = computed(() => store.getters.form);
-        const defaultSubmission = computed(() => store.getters.submission);
+        const form = store.getters.form;
+        let defaultSubmission = store.getters.submission;
+        let currentSubmission = reactive({});
+        var options = reactive({});
 
-        var options = ref({});
-
-        function mySubmit(...args) {
+        function handleSubmit(...args) {
             args[0].metadata = {}; // Avoid polluting console
             console.log(
-                `[VForm.mySubmit] ${args.length} args, args[0]:${JSON.stringify(
-                    args
-                )}`
+                `[VForm.handleSubmit] ${
+                    args.length
+                } args, args[0]=${JSON.stringify(args[0])}`
             );
             setSubmission(args[0]);
         }
 
-        let submission = reactive({ data: {} });
+        function handleFormioKey(e) {
+            // console.log(
+            //     `[VForm.handlehandleFormioKey] key:'${e.detail.key}' code:'${e.detail.e.code}' ctrl:${e.detail.e.ctrlKey}`
+            // );
+        }
+
+        let handleSubmission = function (event) {
+            // console.log(
+            //     `[VForm.handleSubmission] event=${JSON.stringify(event)}`
+            // );
+            // Copy non reactive event to reactive currentSubmission without loosing reactivity
+            vue3DeepClone(currentSubmission, event);
+        };
 
         function handleFormioEvent(...args) {
             let val = args.pop();
@@ -53,25 +62,15 @@ export default defineComponent({
             }
             switch (val.eventName) {
                 case "submit":
-                    mySubmit(...args);
+                    handleSubmit(...args);
                     break;
             }
         }
 
-        function handleFormioKey(e) {
-            console.log(
-                `[VForm.handlehandleFormioKey] key:'${e.detail.key}' code:'${e.detail.e.code}' ctrl:${e.detail.e.ctrlKey}`
-            );
-        }
-
-        let handleSubmission = function (event) {
-            reactDeepUpdate(submission, event.data);
-        };
-
         // expose to template
         return {
             form,
-            submission,
+            currentSubmission,
             defaultSubmission,
             handleFormioEvent,
             handleSubmission,
@@ -89,10 +88,10 @@ export default defineComponent({
             :default="defaultSubmission"
             @formio-event="handleFormioEvent"
             @formio-key="handleFormioKey"
-            @update:submission="handleSubmission"
+            @update-submission="handleSubmission"
         ></Form>
     </div>
-    <div>res:'{{ JSON.stringify(submission) }}'</div>
-    <!-- {{ X }} -->
+    <div>currentSubmission = '{{ currentSubmission }}'</div>
+    defaultSubmission = '{{ defaultSubmission }}''
     <!-- v-model="submission" -->
 </template>

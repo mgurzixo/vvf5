@@ -3,9 +3,7 @@ import {
     onMounted,
     onUnmounted,
     watch,
-    watchEffect,
     getCurrentInstance,
-    computed,
     toRaw,
     isReactive,
 } from "vue";
@@ -18,7 +16,7 @@ export default {
         },
         default: {
             type: Object,
-            default: {},
+            default: { data: {} },
         },
         language: {
             type: String,
@@ -29,11 +27,10 @@ export default {
             default: {},
         },
     },
-    emits: ["update:submission", "formio-event"],
+    emits: ["update-submission", "formio-event"],
 
     setup(props) {
-        let instance;
-        let fastCloneDeep = Formio.Utils.fastCloneDeep;
+        let formInstance;
         let vm = getCurrentInstance();
 
         onMounted(function () {
@@ -53,41 +50,41 @@ export default {
                 props.options
             )
                 .then((myInstance) => {
-                    instance = myInstance;
-                    return instance;
+                    formInstance = myInstance;
+                    return formInstance;
                 })
                 .catch((err) => {
                     console.error(err);
                 });
         }
 
-        function setFormSubmission() {
-            console.log(
-                `[Form.setFormSubmission]1 default=${JSON.stringify(
-                    props.default
-                )}`
-            );
-            if (instance) {
-                let sub1 = fastCloneDeep(toRaw(props.default));
-                instance.setSubmission(sub1).then(() => {
-                    console.log(
-                        `[Form.setFormSubmission]2 instance.submission:${JSON.stringify(
-                            instance.submission
-                        )}`
-                    );
-                });
+        function setFormSubmission(val) {
+            if (formInstance) {
+                // Without JSON, defaultSubmission in Form will be polluted...
+                formInstance.setSubmission(JSON.parse(JSON.stringify(val)));
+                // .then(() => {
+                //     console.log(
+                //         `[Form.setFormSubmission]setSubmission done formInstance.submission=${JSON.stringify(
+                //             formInstance.submission
+                //         )}`
+                //     );
+                // });
             }
         }
 
         function setupForm() {
-            if (!instance) {
+            if (!formInstance) {
                 return;
             }
-            for (let comp of instance.components) addKeyEvent(comp);
-            instance.language = props.language;
-            instance.nosubmit = true;
-            setFormSubmission();
-            instance.events.onAny((...args) => {
+            for (let comp of formInstance.components) addKeyEvent(comp);
+            formInstance.language = props.language;
+            formInstance.nosubmit = true;
+            setFormSubmission(props.default);
+            watch(props.default, () => {
+                setFormSubmission(props.default);
+            });
+
+            formInstance.events.onAny((...args) => {
                 const eventParts = args[0].split(".");
                 // Only handle formio events. Should we?
                 const namespace = props.options.namespace || "formio";
@@ -99,7 +96,11 @@ export default {
                 args[0] = eventParts[1];
                 if (args[0] == "change") {
                     // send current submission
-                    vm.emit("update:submission", args[1]);
+                    // For an unknown reason, args[1].changed is weird!
+                    // Maybe https://stackoverflow.com/questions/46850145/return-undefined-from-existing-property-in-javascript-model
+                    args[1]["changed"] = {};
+                    args[1]["changed"] = undefined;
+                    vm.emit("update-submission", args[1]);
                 }
                 // Emit custom events under their own name as well.
                 if (eventParts[1] === "customEvent") {
@@ -109,7 +110,7 @@ export default {
                 // to all formio events easily
                 args.push({
                     eventName: args[0],
-                    formInstance: instance,
+                    formInstance: formInstance,
                 });
                 args[0] = "formio-event";
                 vm.emit.apply(vm, args);
@@ -126,23 +127,19 @@ export default {
                         e: e,
                         key: comp.key,
                         comp: comp,
-                        instance: instance,
+                        formInstance: formInstance,
                     },
                 });
                 elem.dispatchEvent(e1);
             });
         }
 
-        watchEffect(props.default, (newSub, oldSub) => {
-            console.log(`[Form.watch.default]`);
-            setFormSubmission();
-        });
-
         onUnmounted(function () {
             console.log(`[Form.onUnmounted]`);
+            // Should we have a callback to call for saving current screen state?
             // Should we remove keyEvent listeners?
-            if (instance) {
-                instance.destroy(true);
+            if (formInstance) {
+                formInstance.destroy(true);
             }
         });
         // expose to template
