@@ -1,6 +1,12 @@
 <script setup>
 "use strict";
 
+// Sourced from vue-formio/src/FormBuilder.ts
+import FormioFormBuilder from "formiojs/FormBuilder";
+import AllComponents from "formiojs/components";
+import Components from "formiojs/components/Components";
+Components.setComponents(AllComponents);
+
 import {
     onMounted,
     onUnmounted,
@@ -31,7 +37,7 @@ function initializeBuilder() {
     if (builder !== undefined) {
         builder.instance.destroy(true);
     }
-    builder = new Formio.FormBuilder(
+    builder = new FormioFormBuilder(
         vm.refs.formio,
         {
             components: props.components,

@@ -8,6 +8,12 @@ import {
     isReactive,
 } from "vue";
 
+// Sourced from vue-formio/src/components/Form.ts
+import AllComponents from "formiojs/components";
+import Components from "formiojs/components/Components";
+Components.setComponents(AllComponents);
+import FormioForm from "formiojs/Form";
+
 export default {
     props: {
         src: {
@@ -44,11 +50,11 @@ export default {
         });
 
         function initializeForm() {
-            return new Formio.createForm(
+            return new FormioForm(
                 vm.refs.formio,
                 props.src,
                 props.options
-            )
+            ).ready
                 .then((myInstance) => {
                     formInstance = myInstance;
                     return formInstance;
