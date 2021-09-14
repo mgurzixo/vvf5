@@ -1,9 +1,7 @@
 $icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 
-@import "../../node_modules/formiojs/dist/formio.full.min.css";
-
+// @import "../../node_modules/formiojs/dist/formio.full.min.css";
 // @import "../node_modules/bootswatch/yeti/_variables.scss";
-
 // @import "../node_modules/bootstrap-scss/bootstrap.scss";
 // @import "../node_modules/choices.js/src/styles/choices.scss";
 //  '../node_modules/dialog-polyfill/dialog-polyfill.css',
@@ -16,3 +14,33 @@ $icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 // @import "../node_modules/formiojs/src/sass/formio.embed.scss";
 // @import "../node_modules/formiojs/src/sass/formio.form.builder.scss";
 // @import "../node_modules/formiojs/src/sass/formio.form.scss";
+
+// Import only what you need from Bulma
+// @import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma-rtl.min.css";
+
+// @import "https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css";
+
+@import "./CustomBulma.scss";
+
+// @import "bulma/css/bulma-rtl.css";
+// @import "bulma/sass/bulma.sass";
+
+@import "bulma/sass/utilities/_all";
+@import "bulma/sass/base/_all";
+@import "bulma/sass/elements/_all";
+@import "bulma/sass/form/_all";
+@import "bulma/sass/components/_all";
+@import "bulma/sass/grid/_all";
+@import "bulma/sass/helpers/_all";
+@import "bulma/sass/layout/_all";
+
+// @import "bulma/sass/utilities/_all.sass";
+// @import "bulma/sass/base/_all.sass";
+// @import "bulma/sass/elements/button.sass";
+// @import "bulma/sass/elements/container.sass";
+// @import "bulma/sass/elements/title.sass";
+// @import "bulma/sass/form/_all.sass";
+// @import "bulma/sass/components/navbar.sass";
+// @import "bulma/sass/layout/hero.sass";
+// @import "bulma/sass/layout/section.sass";
+// @import "./fieldset.scss";

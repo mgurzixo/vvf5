@@ -1,0 +1,22 @@
+<fieldset class="fieldset">
+    {% if (ctx.component.legend) { %}
+    <legend
+        ref="header"
+        class="{{
+            ctx.component.collapsible ? 'formio-clickable' : '' + 'label px-1'
+        }}"
+    >
+        {{ ctx.t(ctx.component.legend) }}
+        {% if (ctx.component.tooltip) { %}
+        <i
+            ref="tooltip"
+            class="{{ ctx.iconClass('question-sign') }} text-muted"
+        ></i>
+        {% } %}
+    </legend>
+    {% } %} {% if (!ctx.collapsed) { %}
+    <div class="fieldset-body" ref="{{ ctx.nestedKey }}">
+        {{ ctx.children }}
+    </div>
+    {% } %}
+</fieldset>

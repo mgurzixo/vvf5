@@ -6,15 +6,19 @@ import {
     getCurrentInstance,
     toRaw,
     isReactive,
+    defineComponent,
 } from "vue";
 
 // Sourced from vue-formio/src/components/Form.ts
 import AllComponents from "formiojs/components";
 import Components from "formiojs/components/Components";
 Components.setComponents(AllComponents);
+import A from "formiojs";
+import Templates from "formiojs/templates/Templates";
 import FormioForm from "formiojs/Form";
+import bulma from "/lib";
 
-export default {
+export default defineComponent({
     props: {
         src: {
             type: Object,
@@ -40,6 +44,7 @@ export default {
         let vm = getCurrentInstance();
 
         onMounted(function () {
+            useBulma();
             initializeForm()
                 .then(() => {
                     setupForm();
@@ -62,6 +67,16 @@ export default {
                 .catch((err) => {
                     console.error(err);
                 });
+        }
+
+        function useBulma() {
+            console.log(
+                `[Form] ${JSON.stringify(bulma.templates.bulma, null, 2)}`
+            );
+            // console.log(`[main] ${bulma.templates.bulma.label.form}, null, 2)}`);
+            for (var comp of Object.keys(bulma.templates.bulma)) {
+                Templates.current[comp] = bulma.templates.bulma[comp];
+            }
         }
 
         function setFormSubmission(val) {
@@ -151,7 +166,7 @@ export default {
         // expose to template
         return {};
     },
-};
+});
 </script>
 
 <template>

@@ -1,0 +1,53 @@
+{% if (ctx.component.prefix || ctx.component.suffix) { %}
+  <div class="field has-addons mb-0">
+{% } else { %}
+  <div class="field mb-0">
+{% } %}
+{% if (ctx.component.prefix) { %}
+<div class="control">
+  <a class = "button is-static">
+    {{ctx.component.prefix}}
+  </a>
+</div>
+{% } %}
+
+<div class="control" style="flex-grow:99;">
+  <input
+  class="{{`${ctx.input.type === 'textarea' ? 'textarea' : 'input'} ${ctx.component.customClass} `}}""
+  type="{{`${ctx.component.type === 'textfield' ? 'text' : ctx.component.type}`}}"
+  placeholder="{{ctx.component.placeholder}}"
+  ref="{{ctx.input.ref ? ctx.input.ref : 'input'}}"
+  {% for (var attr in ctx.input.attr) { %}
+    {{attr}}="{{ctx.input.attr[attr]}}"
+  {% } %}
+  >
+  {{ctx.input.content}}
+  </input>
+</div>
+
+{% if (ctx.component.suffix) { %}
+<div class="control">
+  {% if (ctx.component.suffix=='%password%') { %}
+  <a class = "button">
+    <i class="icon {{ ctx.iconClass(ctx.input.attr.type == 'password'? 'eye' : 'eye-slash') }}"> </i>
+  </a>
+  {% } else { %}
+  <a class = "button is-static">
+    {{ctx.component.suffix}}
+  </a>
+  {% } %}
+</div>
+{% } %}
+
+
+{% if (ctx.component.showCharCount) { %}
+<span class="text-muted pull-right" ref="charcount"></span>
+{% } %}
+{% if (ctx.component.showWordCount) { %}
+<span class="text-muted pull-right" ref="wordcount"></span>
+{% } %}
+
+</div>
+
+<p ref="messageContainer" class="help is-danger"></p>
+<div class="mb-3"></div>

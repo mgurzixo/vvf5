@@ -7,14 +7,41 @@ export default createStore({
         form: {
             components: [
                 {
-                    type: "textfield",
-                    key: "firstName",
-                    label: "First Name",
-                },
-                {
-                    type: "textfield",
-                    key: "lastName",
-                    label: "Last Name",
+                    label: "Columns",
+                    key: "columns",
+                    type: "columns",
+                    columns: [
+                        {
+                            width: 6,
+                            offset: 0,
+                            push: 0,
+                            pull: 0,
+                            size: "md",
+                            currentWidth: 6,
+                            components: [
+                                {
+                                    type: "textfield",
+                                    key: "firstName",
+                                    label: "First Name",
+                                },
+                            ],
+                        },
+                        {
+                            width: 6,
+                            offset: 0,
+                            push: 0,
+                            pull: 0,
+                            size: "md",
+                            currentWidth: 6,
+                            components: [
+                                {
+                                    type: "textfield",
+                                    key: "lastName",
+                                    label: "Last Name",
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
                     type: "button",

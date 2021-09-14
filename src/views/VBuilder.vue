@@ -1,43 +1,50 @@
-<script setup>
+<script>
 "use strict";
-console.log(`[VBuilder] entering`);
-
+import { defineComponent } from "vue";
+import store from "../store.js";
 import Builder from "../components/Builder.vue";
-import {
-    initStoreDefs,
-    components,
-    setComponents,
-    setForm,
-} from "../storeDefs";
-initStoreDefs();
 
-function changed(event) {
-    // console.log(`[Vbuilder.changed] ${JSON.stringify(event)}`);
-    if (event.components) {
-        // console.log(`[Builder.changed] event:${Object.keys(event)}`);
-        // Dirty ;) cf. console.log...
-        // See https://help.form.io/developers/form-builder#events
-        setForm(event);
-    } else {
-        // console.log(`[Vbuilder.changed] no components`);
-    }
-}
+export default defineComponent({
+    components: {
+        Builder,
+    },
+    props: {},
+    setup(props) {
+        const components = store.getters.form.components;
 
-function formioEvent(...args) {
-    let val = args.pop();
-    // console.log(
-    //     `[VBuilder.formioEvent] '${val.eventName}': ${args.length} args.`
-    // );
-}
+        function handleChange(event) {
+            // console.log(`[Vbuilder.handleChanged] ${JSON.stringify(event)}`);
+            if (event.components) {
+                // See https://help.form.io/developers/form-builder#events
+                // console.log(`[Builder.handleChanged] event:${Object.keys(event)}`);
+                store.dispatch("setForm", event);
+            } else {
+                // console.log(`[Vbuilder.handleChanged] no components`);
+            }
+        }
 
-console.log(`[VBuilder] end`);
+        function handleFormioEvent(...args) {
+            let val = args.pop();
+            console.log(
+                `[VBuilder.handleFormioEvent] '${val.eventName}': ${args.length} args.`
+            );
+        }
+
+        // expose to template
+        return {
+            components,
+            handleChange,
+            handleFormioEvent,
+        };
+    },
+});
 </script>
 <template>
     <div class="home">
         <Builder
             :components="components"
-            @change="changed"
-            @formio-event="formioEvent"
+            @change="handleChange"
+            @formio-event="handleFormioEvent"
         ></Builder>
     </div>
 </template>

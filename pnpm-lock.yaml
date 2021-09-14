@@ -4,6 +4,7 @@ specifiers:
   '@vitejs/plugin-vue': ^1.6.0
   '@vue/compiler-sfc': ^3.2.6
   bootstrap-scss: ^5.1.0
+  bulma: ^0.9.3
   font-awesome: ^4.7.0
   formiojs: ^4.13.5
   sass: ^1.38.2
@@ -13,6 +14,7 @@ specifiers:
   vuex: ^4.0.2
 
 dependencies:
+  bulma: 0.9.3
   font-awesome: 4.7.0
   formiojs: 4.13.5
   vue: 3.2.6
@@ -220,6 +222,10 @@ packages:
 
   /browser-cookies/1.2.0:
     resolution: {integrity: sha1-/KP/ubamOq3E2MCZnGtX0Pp9KbU=}
+    dev: false
+
+  /bulma/0.9.3:
+    resolution: {integrity: sha512-0d7GNW1PY4ud8TWxdNcP6Cc8Bu7MxcntD/RRLGWuiw/s0a9P+XlH/6QoOIrmbj6o8WWJzJYhytiu9nFjTszk1g==}
     dev: false
 
   /call-bind/1.0.2:

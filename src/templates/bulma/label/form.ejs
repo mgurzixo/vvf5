@@ -1,0 +1,17 @@
+
+<label
+{% if (!ctx.component.widget || ctx.component.widget.type != "input") { %}
+  class="label {{ ctx.label.className }}"
+{% } else { %}
+  class="label mb-0 {{ ctx.label.className }}"
+{% } %}
+>
+  {{ ctx.t(ctx.component.label) }}
+
+  {% if (ctx.component.tooltip) { %}
+    <span class="has-tooltip-arrow" data-tooltip="{{ctx.component.tooltip}}">
+      <i  class="{{ ctx.iconClass('question-sign') }} text-muted"> </i>
+    </span>
+  {% } %}
+
+</label>
