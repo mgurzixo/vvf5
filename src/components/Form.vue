@@ -13,7 +13,6 @@ import {
 import AllComponents from "formiojs/components";
 import Components from "formiojs/components/Components";
 Components.setComponents(AllComponents);
-import A from "formiojs";
 import Templates from "formiojs/templates/Templates";
 import FormioForm from "formiojs/Form";
 import bulma from "/lib";
