@@ -1,4 +1,5 @@
 <script>
+"use strict";
 import {
     onMounted,
     onUnmounted,
@@ -15,7 +16,7 @@ import Components from "formiojs/components/Components";
 Components.setComponents(AllComponents);
 import Templates from "formiojs/templates/Templates";
 import FormioForm from "formiojs/Form";
-import bulma from "/lib";
+import bulma from "../templatesCompiled/bulma";
 
 export default defineComponent({
     props: {
@@ -69,12 +70,9 @@ export default defineComponent({
         }
 
         function useBulma() {
-            console.log(
-                `[Form] ${JSON.stringify(bulma.templates.bulma, null, 2)}`
-            );
-            // console.log(`[main] ${bulma.templates.bulma.label.form}, null, 2)}`);
-            for (var comp of Object.keys(bulma.templates.bulma)) {
-                Templates.current[comp] = bulma.templates.bulma[comp];
+            // console.log(`[useBulma] ${JSON.stringify(bulma, null, 2)}`);
+            for (var comp of Object.keys(bulma)) {
+                Templates.current[comp] = bulma[comp];
             }
         }
 

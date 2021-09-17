@@ -20,7 +20,7 @@ export default defineConfig({
     // plugins: [vue(), myPlugin()],
     plugins: [
         vue(),
-        vitePluginTemplates("src/templates", "src/compiledTemplates"),
+        vitePluginTemplates("src/templates", "src/templatesCompiled"),
     ],
     resolve: {
         alias: {

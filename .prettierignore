@@ -1,0 +1,2 @@
+# ignore (ie. don't reformat) formio templates
+*.ejs
