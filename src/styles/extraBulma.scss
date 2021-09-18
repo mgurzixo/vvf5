@@ -1,0 +1,33 @@
+@import "./choices.scss";
+@import "./fieldset.scss";
+
+$secondary: #67579b !default;
+$secondary-invert: findColorInvert($secondary) !default;
+
+$custom-colors: (
+    "secondary": (
+        $secondary,
+        $secondary-invert,
+    ),
+);
+
+$menu-item-hover-background-color: rgb(230, 230, 247);
+
+.button.is-secondary:hover,
+.button.is-secondary.is-hovered {
+    color: $beige-lighter;
+}
+
+.button.is-secondary {
+    color: $beige-lighter;
+}
+
+.buttons.are-tiny .button:not(.is-normal):not(.is-medium):not(.is-large):not(.is-small) {
+    margin: 0 0 0 1px;
+    padding: 0 0.2rem 0 0.2rem;
+    font-size: 0.8rem;
+}
+
+.active {
+    @extend .is-active;
+}

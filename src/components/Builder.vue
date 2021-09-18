@@ -6,14 +6,10 @@ import FormioFormBuilder from "formiojs/FormBuilder";
 import AllComponents from "formiojs/components";
 import Components from "formiojs/components/Components";
 Components.setComponents(AllComponents);
+import bulma from "../templatesCompiled/bulma";
+import Templates from "formiojs/templates/Templates";
 
-import {
-    onMounted,
-    onUnmounted,
-    watch,
-    getCurrentInstance,
-    defineComponent,
-} from "vue";
+import { onMounted, onUnmounted, watch, getCurrentInstance, defineComponent } from "vue";
 
 export default defineComponent({
     props: {
@@ -26,6 +22,17 @@ export default defineComponent({
             default: {},
         },
     },
+
+    emits: [
+        "change",
+        "formio-event",
+        "saveComponent",
+        "updateComponent",
+        "deleteComponent",
+        "editComponent",
+        "redraw",
+        "addComponent",
+    ],
 
     setup(props) {
         var builder;
@@ -55,10 +62,7 @@ export default defineComponent({
                     const eventParts = args[0].split(".");
                     // Only handle formio events.
                     const namespace = props.options.namespace || "formio";
-                    if (
-                        eventParts[0] !== namespace ||
-                        eventParts.length !== 2
-                    ) {
+                    if (eventParts[0] !== namespace || eventParts.length !== 2) {
                         return;
                     }
                     // Remove formio. from event.
@@ -67,11 +71,9 @@ export default defineComponent({
                     vm.emit.apply(vm, args);
                     // Emit a change event if the schema changes.
                     if (
-                        [
-                            "saveComponent",
-                            "updateComponent",
-                            "deleteComponent",
-                        ].includes(eventParts[1])
+                        ["saveComponent", "updateComponent", "deleteComponent"].includes(
+                            eventParts[1]
+                        )
                     ) {
                         args[0] = "change";
                         vm.emit.apply(vm, args);
@@ -87,8 +89,16 @@ export default defineComponent({
             });
         }
 
+        function useBulma() {
+            // console.log(`[useBulma] ${JSON.stringify(bulma, null, 2)}`);
+            for (var comp of Object.keys(bulma)) {
+                Templates.current[comp] = bulma[comp];
+            }
+        }
+
         onMounted(function () {
             // console.log(`[Builder.onMounted] props=${JSON.stringify(props)}`);
+            useBulma();
             initializeBuilder().catch((err) => {
                 console.warn(`Builder] ${err}`);
             });
@@ -119,5 +129,5 @@ export default defineComponent({
 
 <template>
     <div ref="formio"></div>
-    <p><pre>{{JSON.stringify(components, null, 2)}}</pre></p>
+    <!-- <p><pre>{{JSON.stringify(components, null, 2)}}</pre></p> -->
 </template>

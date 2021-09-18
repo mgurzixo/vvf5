@@ -1,8 +1,8 @@
 <div class="card form-builder-panel" ref="group-panel-{{ctx.groupKey}}">
   <div class="card-header form-builder-group-header" id="heading-{{ctx.groupKey}}">
-    <h5 class="mb-0 mt-0">
+    <!-- <h5 class="mb-0 mt-0"> -->
       <button
-        class="btn btn-block builder-group-button"
+        class="button is-primary is-fullwidth btn-block builder-group-button"
         type="button"
         data-toggle="collapse"
         data-target="#group-{{ctx.groupKey}}"
@@ -13,7 +13,7 @@
       >
         {{ctx.t(ctx.group.title)}}
       </button>
-    </h5>
+    <!-- </h5> -->
   </div>
   <div
     id="group-{{ctx.groupKey}}"
@@ -23,19 +23,26 @@
     aria-labelledby="heading-{{ctx.groupKey}}"
     ref="sidebar-group"
   >
-    <div id="group-container-{{ctx.groupKey}}" class="card-body no-drop p-2" ref="sidebar-container">
+    <div id="group-container-{{ctx.groupKey}}" class="card-content no-drop p-2" ref="sidebar-container">
       {% !ctx.group.componentOrder || ctx.group.componentOrder.forEach(function(componentKey) { %}
-      <span
-        data-group="{{ctx.groupKey}}"
-        data-key="{{ctx.group.components[componentKey].key}}"
-        data-type="{{ctx.group.components[componentKey].schema.type}}"
-        class="btn btn-primary btn-sm btn-block formcomponent drag-copy"
+        <button 
+          class="button is-default is-small is-secondary is-rounded is-fullwidth mt-1 mb-1 btn-block formcomponent drag-copy"
+                data-group="{{ctx.groupKey}}"
+          data-key="{{ctx.group.components[componentKey].key}}"
+          data-type="{{ctx.group.components[componentKey].schema.type}}"
       >
-        {% if (ctx.group.components[componentKey].icon) { %}
-          <i class="{{ctx.iconClass(ctx.group.components[componentKey].icon)}}" style="margin-right: 5px;"></i>
-        {% } %}
-        {{ctx.t(ctx.group.components[componentKey].title)}}
-        </span>
+          <span class="icon is-small">
+            <i class="fa {{ctx.iconClass(ctx.group.components[componentKey].icon)}}"></i>
+          </span>
+          <span
+            data-group="{{ctx.groupKey}}"
+            data-key="{{ctx.group.components[componentKey].key}}"
+            data-type="{{ctx.group.components[componentKey].schema.type}}"
+            class=""
+          >
+            {{ctx.t(ctx.group.components[componentKey].title)}}
+          </span>
+        </button>
       {% }) %}
       {{ctx.subgroups.join('')}}
     </div>

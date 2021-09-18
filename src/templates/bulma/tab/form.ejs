@@ -1,9 +1,16 @@
 <div class="card">
-  <div class="card-header">
-    <ul class="nav nav-tabs card-header-tabs">
+  <div class="tabs is-boxed mb-0">
+    <ul class="">
       {% ctx.component.components.forEach(function(tab, index) { %}
-      <li class="nav-item{{ ctx.currentTab === index ? ' active' : ''}}" role="presentation" ref="{{ctx.tabLikey}}">
-        <a class="nav-link{{ ctx.currentTab === index ? ' active' : ''}}" href="#{{tab.key}}" ref="{{ctx.tabLinkKey}}">{{ctx.t(tab.label)}}</a>
+      <li
+        class=" nav-item{{ ctx.currentTab === index ? ' active' : ''}}"              role="presentation" ref="{{ctx.tabLikey}}"
+      >
+        <a
+          class="nav-link{{ ctx.currentTab === index ? ' active' : ''}}"
+          href="#{{tab.key}}" ref="{{ctx.tabLinkKey}}"
+        >
+          {{ctx.t(tab.label)}}
+        </a>
       </li>
       {% }) %}
     </ul>
@@ -11,7 +18,7 @@
   {% ctx.component.components.forEach(function(tab, index) { %}
   <div
     role="tabpanel"
-    class="card-body tab-pane{{ ctx.currentTab === index ? ' active' : ''}}"
+    class="pt-0 card-content tab-pane{{ ctx.currentTab === index ? ' active' : ''}}"
     style="display: {{ctx.currentTab === index ? 'block' : 'none'}}"
     ref="{{ctx.tabKey}}"
   >

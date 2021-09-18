@@ -1,9 +1,5 @@
 <label
-    {% if (!ctx.component.widget || ctx.component.widget.type  != "input" ) { %}
-        class="label {{ ctx.label.className }}"
-    {% } else { %}
-        class="label mb-0 {{ ctx.label.className }}"
-    {% } %}
+        class="label mb-0 pt-3 {{ ctx.label.className }}"
 >
     {{ ctx.t(ctx.component.label) }}
 

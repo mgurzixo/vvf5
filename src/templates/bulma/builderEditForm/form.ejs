@@ -1,49 +1,53 @@
-<div class="row">
-  <div class="col col-sm-6">
-    <p class="lead">{{ctx.t(ctx.componentInfo.title)}} {{ctx.t('Component')}}</p>
+<div class="columns">
+  <div class="column is-6-tablet">
+    <p class="is-size-3">{{ctx.t(ctx.componentInfo.title)}} {{ctx.t('Component')}}</p>
   </div>
-  <div class="col col-sm-6">
+  <div class="column is-6-tablet">
     <div class="float-right" style="margin-right: 20px; margin-top: 10px">
       <a href="{{ctx.t(ctx.componentInfo.documentation)}}" target="_blank">
-        <i class="{{ctx.iconClass('new-window')}}"> {{ctx.t('Help')}}</i>
+        <i class="has-text-primary {{ctx.iconClass('new-window')}}"> {{ctx.t('Help')}}</i>
       </a>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col {% if (ctx.preview) { %}col-sm-6{% } else { %}col-sm-12{% } %}">
+<div class="columns">
+  <div class="column {% if (ctx.preview) { %}is-6-tablet{% } else { %}is-12-tablet{% } %}">
     <div ref="editForm">
         {{ctx.editForm}}
     </div>
     {% if (!ctx.preview) { %}
     <div style="margin-top: 10px;">
-      <button class="btn btn-success" style="margin-right: 10px;" ref="saveButton">{{ctx.t('Save')}}</button>
-      <button class="btn btn-secondary" style="margin-right: 10px;" ref="cancelButton">{{ctx.t('Cancel')}}</button>
-      <button class="btn btn-danger" ref="removeButton">{{ctx.t('Remove')}}</button>
+      <button class="button is-success" style="margin-right: 10px;" ref="saveButton">{{ctx.t('Save')}}</button>
+      <button class="button is-secondary" style="margin-right: 10px;" ref="cancelButton">{{ctx.t('Cancel')}}</button>
+      <button class="button is-danger" ref="removeButton">{{ctx.t('Remove')}}</button>
     </div>
     {% } %}
   </div>
   {% if (ctx.preview) { %}
-  <div class="col col-sm-6">
-    <div class="card panel preview-panel">
+  <div class="column is-6-tablet">
+    <div class="panel preview-panel">
+    <div class="card">
       <div class="card-header">
-        <h4 class="card-title mb-0">{{ctx.t('Preview')}}</h4>
+        <h4 class="card-header-title mb-0">{{ctx.t('Preview')}}</h4>
       </div>
-      <div class="card-body">
+      <div class="card-content">
         <div class="component-preview" ref="preview">
           {{ctx.preview}}
         </div>
       </div>
     </div>
+    </div>
     {% if (ctx.componentInfo.help) { %}
-    <div class="card card-body bg-light formio-settings-help">
+    <div class="card bg-light formio-settings-help">
+    <div class="card-body">
       {{ ctx.t(ctx.componentInfo.help) }}
+    </div>
     </div>
     {% } %}
     <div style="margin-top: 10px;">
-      <button class="btn btn-success" style="margin-right: 10px;" ref="saveButton">{{ctx.t('Save')}}</button>
-      <button class="btn btn-secondary" style="margin-right: 10px;" ref="cancelButton">{{ctx.t('Cancel')}}</button>
-      <button class="btn btn-danger" ref="removeButton">{{ctx.t('Remove')}}</button>
+      <button class="button is-success" style="margin-right: 10px;" ref="saveButton">{{ctx.t('Save')}}</button>
+      <button class="button is-secondary" style="margin-right: 10px;" ref="cancelButton">{{ctx.t('Cancel')}}</button>
+      <button class="button is-danger" ref="removeButton">{{ctx.t('Remove')}}</button>
     </div>
   </div>
   {% } %}

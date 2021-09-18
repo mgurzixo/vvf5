@@ -43,8 +43,8 @@ export default defineComponent({
     <div class="home">
         <Builder
             :components="components"
-            @change="handleChange"
             @formio-event="handleFormioEvent"
         ></Builder>
     </div>
+    <!-- @change="handleChange" -->
 </template>
