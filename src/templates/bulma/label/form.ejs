@@ -3,8 +3,8 @@
 >
     {{ ctx.t(ctx.component.label) }}
 
-    {% if (ctx.component.tooltip) { %}
-        <span class="has-tooltip-arrow" data-tooltip="{{ ctx.component.tooltip }}">
+    {% if (ctx.component.tooltip != "") { %}
+        <span class="has-tooltip-arrow Xhas-tooltip-active has-tooltip-right has-tooltip-multiline" data-tooltip="{{ ctx.component.tooltip }}">
             <i class="{{ ctx.iconClass('question-sign') }} text-muted"> </i>
         </span>
     {% } %}

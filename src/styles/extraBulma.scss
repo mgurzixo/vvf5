@@ -31,3 +31,7 @@ $menu-item-hover-background-color: rgb(230, 230, 247);
 .active {
     @extend .is-active;
 }
+
+.is-invalid {
+    @extend .is-danger;
+}
