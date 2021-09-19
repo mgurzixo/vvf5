@@ -1,21 +1,28 @@
-<script setup></script>
+<script setup>
+import Navbar from "./components/Navbar.vue";
+</script>
 <template>
-    <!-- <div id="app"> -->
-    <ul>
-        <li>
-            <router-link to="/">Home</router-link>
-        </li>
-        |
-        <li>
-            <router-link to="/builder">Builder</router-link>
-        </li>
-        |
-        <li>
-            <router-link to="/form">Form</router-link>
-        </li>
-    </ul>
-    <router-view />
-    <!-- </div> -->
+    <div class="">
+        <Navbar></Navbar>
+        <!-- <ul class="title">
+            <li>
+                <router-link to="/">Home</router-link>
+            </li>
+            |
+            <li>
+                <router-link to="/builder">Builder</router-link>
+            </li>
+            |
+            <li>
+                <router-link to="/form">Form</router-link>
+            </li>
+            |
+            <li>
+                <router-link to="/drag">Drag</router-link>
+            </li>
+        </ul> -->
+        <router-view />
+    </div>
 </template>
 
 <script>
