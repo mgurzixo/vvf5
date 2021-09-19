@@ -11,6 +11,10 @@ $custom-colors: (
     ),
 );
 
+.text-muted {
+    color: rgba($text, 0.5) !important;
+}
+
 $menu-item-hover-background-color: rgb(230, 230, 247);
 
 .button.is-secondary:hover,
