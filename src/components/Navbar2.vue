@@ -1,16 +1,13 @@
 <template>
     <nav
-        class="navbar is-fixed-top has-shadow has-background-grey-lighter is-size-5"
+        class="navbar has-shadow has-background-grey-lighter is-size-5"
         role="navigation"
         aria-label="main navigation"
     >
         <div class="navbar-brand">
-            <div class="navbar-item">
-                <img src="../assets/logo.png" />
-            </div>
-            <div class="navbar-item has-text-weight-bold has-text-secondary">VVF5</div>
+            <div class="ml-6 navbar-item has-text-weight-bold has-text-secondary">VVF5(2)</div>
             <a
-                class="navbar-burger burger"
+                class="navbar-burger"
                 role="button"
                 aria-label="menu"
                 aria-expanded="false"
@@ -21,6 +18,9 @@
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
             </a>
+            <div class="navbar-item">
+                <img src="../assets/logo.png" />
+            </div>
         </div>
         <div
             id="mainMenu"
@@ -28,10 +28,8 @@
             :class="{ 'is-active': isHamburgerOpen }"
         >
             <div class="navbar-start" @click="toggleBurger">
-                <router-link class="navbar-item" to="/">Home</router-link>
                 <router-link class="navbar-item" to="/builder">Builder</router-link>
                 <router-link class="navbar-item" to="/form">Form</router-link>
-                <router-link class="navbar-item" to="/drag">Drag</router-link>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link" @mouseenter="moreEnter" @mouseleave="moreLeave">

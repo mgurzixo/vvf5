@@ -1,6 +1,3 @@
-@import "./choices.scss";
-@import "./fieldset.scss";
-
 $secondary: #67579b !default;
 $secondary-invert: findColorInvert($secondary) !default;
 
@@ -27,7 +24,42 @@ $custom-colors: (
     border: 0;
 }
 
-$menu-item-hover-background-color: rgb(230, 230, 247);
+// Needed dor mgDrawer
+// cf. https://github.com/jgthms/bulma/issues/1115
+$menu-invert-background: findColorInvert($background) !default;
+$menu-invert-label-background-color: findColorInvert($menu-label-background-color) !default;
+$menu-invert-label-color: findColorInvert($menu-label-color) !default;
+$menu-invert-item-color: findColorInvert($menu-item-color) !default;
+$menu-invert-item-active-background-color: findColorInvert(
+    $menu-item-active-background-color
+) !default;
+$menu-invert-item-active-color: findColorInvert($menu-item-active-color) !default;
+
+.menu {
+    &.is-invert {
+        background-color: $menu-invert-background;
+        .menu-label {
+            background-color: $menu-invert-label-background-color;
+            color: $menu-invert-label-color;
+            padding-top: 0.3em;
+        }
+        .menu-list {
+            a {
+                color: $menu-invert-item-color;
+                &:hover {
+                    background-color: $menu-invert-item-active-background-color;
+                    color: $menu-invert-item-active-color;
+                }
+            }
+        }
+        .menu-item {
+            color: findColorInvert($menu-invert-background);
+            &.is-active {
+                background-color: green;
+            }
+        }
+    }
+}
 
 .button.is-secondary:hover,
 .button.is-secondary.is-hovered {
@@ -38,16 +70,20 @@ $menu-item-hover-background-color: rgb(230, 230, 247);
     color: $beige-lighter;
 }
 
-.buttons.are-tiny .button:not(.is-normal):not(.is-medium):not(.is-large):not(.is-small) {
-    margin: 0 0 0 1px;
-    padding: 0 0.2rem 0 0.2rem;
-    font-size: 0.8rem;
+.is-circular {
+    border-radius: 50%;
 }
 
+// Needed for formio components
 .active {
     @extend .is-active;
 }
 
+// Needed for formio components
 .is-invalid {
     @extend .is-danger;
 }
+
+@import "./choices.scss";
+@import "./fieldset.scss";
+@import "./mgDrawer.scss";

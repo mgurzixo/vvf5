@@ -1,26 +1,13 @@
 <script setup>
-import Navbar from "./components/Navbar.vue";
+import MgDrawer from "./components/MgDrawer.vue";
+import MgNavbar2 from "./components/Navbar2.vue";
+import BurgerButton from "./components/BurgerButton.vue";
 </script>
 <template>
     <div class="">
-        <Navbar></Navbar>
-        <!-- <ul class="title">
-            <li>
-                <router-link to="/">Home</router-link>
-            </li>
-            |
-            <li>
-                <router-link to="/builder">Builder</router-link>
-            </li>
-            |
-            <li>
-                <router-link to="/form">Form</router-link>
-            </li>
-            |
-            <li>
-                <router-link to="/drag">Drag</router-link>
-            </li>
-        </ul> -->
+        <mg-drawer />
+        <burger-button />
+        <mg-navbar2 />
         <router-view />
     </div>
 </template>
@@ -28,7 +15,7 @@ import Navbar from "./components/Navbar.vue";
 <script>
 export default {
     data: () => {
-        return {};
+        return { isActive: false };
     },
 };
 </script>
@@ -40,9 +27,5 @@ export default {
     /* color: #2c3e50; */
     /* text-align: center;
     margin-top: 60px; */
-}
-li {
-    display: inline-block;
-    margin: 0 5px;
 }
 </style>

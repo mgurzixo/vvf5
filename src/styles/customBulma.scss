@@ -16,11 +16,22 @@ $brown: #637777;
 $beige-light: #d0d1cd;
 $beige-lighter: #eeeeee;
 
+// cf. https://github.com/jgthms/bulma/issues/2183
+$secondary: RebeccaPurple;
+$secondary-invert: findColorInvert($secondary) !default;
+$custom-colors: (
+    "secondary": (
+        $secondary,
+        $secondary-invert,
+    ),
+);
+
 // Update Bulma's global variables
 $family-sans-serif: "Nunito", sans-serif;
 $grey-dark: $brown;
 $grey-light: $beige-light;
 $primary: $purple;
+$success: mediumSeaGreen;
 // $link: $pink;
 // $widescreen-enabled: false;
 // $fullhd-enabled: false;
@@ -28,14 +39,11 @@ $primary: $purple;
 // Update some of Bulma's component variables
 $body-background-color: $beige-lighter;
 $control-border-width: 2px;
-// $input-border-color: transparent;
-// $input-shadow: none;
 
-$success: mediumSeaGreen;
-
-// cf. https://github.com/jgthms/bulma/issues/2183
-$secondary: #67579b;
-$secondary-invert: findColorInvert($secondary) !default;
+$menu-item-hover-background-color: rgb(230, 230, 247);
+$menu-item-active-background-color: RoyalBlue;
+$menu-label-font-size: 1.1em;
+$menu-label-background-color: Cornsilk;
 
 $custom-colors: (
     "secondary": (
@@ -44,23 +52,7 @@ $custom-colors: (
     ),
 );
 
-$menu-item-hover-background-color: rgb(230, 230, 247);
-
-.button.is-secondary:hover,
-.button.is-secondary.is-hovered {
-    color: $beige-lighter;
-}
-
-.button.is-secondary {
-    color: $beige-lighter;
-}
-
-.buttons.are-tiny .button:not(.is-normal):not(.is-medium):not(.is-large):not(.is-small) {
-    margin: 0 0 0 1px;
-    padding: 0 0.2rem 0 0.2rem;
-    font-size: 0.8rem;
-}
-
-.active {
-    @extend .is-active;
-}
+$burger-background-color: white;
+$burger-color: black;
+$burger-height: 112px;
+$burger-width: 132px;
