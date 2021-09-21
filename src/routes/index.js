@@ -19,6 +19,7 @@ const routes = [
         path: "/form",
         name: "form",
         component: VForm,
+        meta: { transition: "overlay-right-full" },
     },
     {
         path: "/builder",

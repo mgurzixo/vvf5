@@ -5,7 +5,10 @@
         aria-label="main navigation"
     >
         <div class="navbar-brand">
-            <div class="ml-6 navbar-item has-text-weight-bold has-text-secondary">VVF5(2)</div>
+            <div class="ml-6 pl-5 navbar-item has-text-weight-bold has-text-secondary">VVF5(2)</div>
+            <div class="navbar-item">
+                <img src="../assets/logo.png" />
+            </div>
             <a
                 class="navbar-burger"
                 role="button"
@@ -18,9 +21,6 @@
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
             </a>
-            <div class="navbar-item">
-                <img src="../assets/logo.png" />
-            </div>
         </div>
         <div
             id="mainMenu"

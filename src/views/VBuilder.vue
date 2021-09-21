@@ -25,9 +25,7 @@ export default defineComponent({
 
         function handleFormioEvent(...args) {
             let val = args.pop();
-            console.log(
-                `[VBuilder.handleFormioEvent] '${val.eventName}': ${args.length} args.`
-            );
+            console.log(`[VBuilder.handleFormioEvent] '${val.eventName}': ${args.length} args.`);
         }
 
         // expose to template
@@ -41,10 +39,7 @@ export default defineComponent({
 </script>
 <template>
     <div class="home">
-        <Builder
-            :components="components"
-            @formio-event="handleFormioEvent"
-        ></Builder>
+        <Builder :components="components" @formio-event="handleFormioEvent"></Builder>
     </div>
     <!-- @change="handleChange" -->
 </template>

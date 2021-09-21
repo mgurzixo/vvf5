@@ -24,7 +24,7 @@ $custom-colors: (
     border: 0;
 }
 
-// Needed dor mgDrawer
+// Needed for mgDrawer
 // cf. https://github.com/jgthms/bulma/issues/1115
 $menu-invert-background: findColorInvert($background) !default;
 $menu-invert-label-background-color: findColorInvert($menu-label-background-color) !default;
@@ -70,7 +70,7 @@ $menu-invert-item-active-color: findColorInvert($menu-item-active-color) !defaul
     color: $beige-lighter;
 }
 
-.is-circular {
+button.is-circular {
     border-radius: 50%;
 }
 

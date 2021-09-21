@@ -27,6 +27,7 @@ $mgdrawer-z-index: 1000 !default;
     width: $mgdrawer-width;
     left: -#{$mgdrawer-width};
     height: 100vh;
+    overflow: auto;
 
     &.is-visible {
         left: 0;

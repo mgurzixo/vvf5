@@ -39,10 +39,10 @@ export default defineComponent({
     <div>
         <div class="is-fixed">
             <button
-                class="button is-circular has-text-white has-background-grey"
+                class="button is-size-4 is-circular has-text-white has-background-grey"
                 @click="handleClick($event)"
             >
-                <span class="icon is-small">
+                <span class="icon fa-lg">
                     <i class="fa fa-bars"></i>
                 </span>
             </button>
