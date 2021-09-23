@@ -5,10 +5,11 @@
         aria-label="main navigation"
     >
         <div class="navbar-brand">
-            <div class="ml-6 pl-5 navbar-item has-text-weight-bold has-text-secondary">VVF5(2)</div>
-            <div class="navbar-item">
+            <div class="navbar-item ml-6 pl-5 mr-0 pr-0">
                 <img src="../assets/logo.png" />
             </div>
+            <div class="navbar-item has-text-weight-bold has-text-secondary">VVF5(2)</div>
+
             <a
                 class="navbar-burger"
                 role="button"

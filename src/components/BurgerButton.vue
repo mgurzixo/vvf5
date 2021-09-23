@@ -1,29 +1,47 @@
 <script>
 "use strict";
-import { defineComponent } from "vue";
+import { onBeforeMount } from "vue";
+import doILink from "../lib/ILink";
 
-export default defineComponent({
-    data: () => {
-        return {};
-    },
-    computed: {
-        hamburgerOpen: {
-            get() {
-                return this.$store.state.drawer;
-            },
-            set(val) {
-                this.$store.commit("setDrawer", val);
+export default {
+    props: {
+        options: {
+            type: Object,
+            default: {
+                isActive: true,
+                iconClass: "",
+                // ()=> router.push(route);
+                action: () => {},
+                transition: "down", // none, right, left, up, down
+                durationMs: "300",
             },
         },
     },
-    methods: {
-        // ...mapMutations(["setDrawer"]),
-        handleClick(e) {
+
+    setup(props) {
+        onBeforeMount(() => {
+            // Setup a sensible default icon if needed
+            if (!props.options.iconClass) {
+                props.options.iconClass = [
+                    "fa fa-bars",
+                    "fa fa-arrow-up",
+                    "fa fa-arrow-down",
+                    "fa fa-arrow-right",
+                    "fa fa-arrow-left",
+                ][["none", "up", "down", "right", "left"].indexOf(props.options.transition)];
+            }
+        });
+
+        let handleClick = function (e) {
             console.log(`click Burger`);
-            this.$store.commit("setDrawer", true);
-        },
+            doILink(props.options.action, props.options.transition, props.options.durationMs);
+        };
+
+        return {
+            handleClick,
+        };
     },
-});
+};
 </script>
 
 <style lang="scss">
@@ -39,11 +57,12 @@ export default defineComponent({
     <div>
         <div class="is-fixed">
             <button
+                @click="handleClick"
+                id="mgburgerbutton"
                 class="button is-size-4 is-circular has-text-white has-background-grey"
-                @click="handleClick($event)"
             >
                 <span class="icon fa-lg">
-                    <i class="fa fa-bars"></i>
+                    <i :class="options.iconClass"></i>
                 </span>
             </button>
         </div>

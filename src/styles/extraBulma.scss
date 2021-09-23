@@ -84,6 +84,10 @@ button.is-circular {
     @extend .is-danger;
 }
 
+.behind-burger {
+    margin-left: 4em;
+    margin-top: 0.5em;
+}
+
 @import "./choices.scss";
 @import "./fieldset.scss";
-@import "./mgDrawer.scss";

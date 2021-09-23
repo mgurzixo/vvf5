@@ -6,7 +6,7 @@ import FormioFormBuilder from "formiojs/FormBuilder";
 import AllComponents from "formiojs/components";
 import Components from "formiojs/components/Components";
 Components.setComponents(AllComponents);
-import bulma from "../templatesCompiled/bulma";
+import bulma from "@/templatesCompiled/bulma";
 import Templates from "formiojs/templates/Templates";
 
 import { onMounted, onUnmounted, watch, getCurrentInstance, defineComponent } from "vue";

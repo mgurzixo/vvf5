@@ -4,7 +4,7 @@ import { vue3DeepClone } from "./lib/vue3Utils";
 export default createStore({
     state: {
         // Warning! all getters elements MUST exist!
-        drawer: false,
+        // drawer: false,
         isLoggedIn: null,
         form: {
             components: [
@@ -57,15 +57,15 @@ export default createStore({
         },
     },
     getters: {
-        drawer: (state) => state.drawer,
+        // drawer: (state) => state.drawer,
         isLoggedIn: (state) => state.isLoggedIn,
     },
     mutations: {
-        toggleDrawer: (state) => (state.drawer = !state.drawer),
-        setDrawer: (state, payload) => {
-            console.log(`[store.setDrawer] ${payload}`);
-            state.drawer = payload;
-        },
+        // toggleDrawer: (state) => (state.drawer = !state.drawer),
+        // setDrawer: (state, payload) => {
+        //     console.log(`[store.setDrawer] ${payload}`);
+        //     state.drawer = payload;
+        // },
         // Formio
         setForm(state, myForm) {
             console.log(`[store.mutations.setForm]`);
