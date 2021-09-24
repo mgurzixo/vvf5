@@ -31,7 +31,13 @@ export default {
         <section class="section">
             <div class="card">
                 <div class="card-header">
-                    <div class="title has-text-centered">Welcome to Formio+Vuejs3+Vite App</div>
+                    <div class="container">
+                        <div class="columns is-multiline is-centered is-mobile">
+                            <div class="column has-text-centered">
+                                <div class="title">Welcome to <br />Vite+Formio+Vue3+Bulma App</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-content">
                     <button class="button m-3 is-medium is-primary is-light">

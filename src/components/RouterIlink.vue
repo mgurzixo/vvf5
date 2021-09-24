@@ -3,7 +3,7 @@ import { reactive, ref, getCurrentInstance, nextTick } from "vue";
 import { defineComponent } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import iLink from "../lib/ILink";
-import { getDrawer, setDrawer } from "@/lib/MgDrawer.js";
+import { getDrawer, setDrawer, getDrawerDuration, setDrawerDuration } from "@/lib/MgDrawer.js";
 
 export default defineComponent({
     props: {
@@ -17,7 +17,7 @@ export default defineComponent({
         },
         durationMs: {
             type: Number,
-            default: 300,
+            default: 5000,
         },
         label: {
             type: String,
@@ -31,19 +31,18 @@ export default defineComponent({
     setup(props) {
         var vm = getCurrentInstance();
         const router = useRouter();
-        console.log("Ilink ");
         let handleClick = function (e) {
-            // nextTick().then(() => {
-            setTimeout(() => {
-                iLink(
-                    () => {
-                        router.push(props.to);
-                    },
-                    props.transition,
-                    props.durationMs
-                );
-            }, 0);
-            // });
+            if (props.resetDrawer) {
+                setDrawer(false);
+                e.stopPropagation();
+            }
+            iLink(
+                () => {
+                    router.push(props.to);
+                },
+                props.transition,
+                props.durationMs
+            );
         };
 
         return { handleClick };
