@@ -1,7 +1,7 @@
 <script>
 "use strict";
-import { onBeforeMount } from "vue";
-import doILink from "../lib/ILink";
+import { onBeforeMount, onMounted, onUpdated } from "vue";
+import { doIlink } from "../lib/Ilink";
 
 export default {
     props: {
@@ -34,7 +34,7 @@ export default {
 
         let handleClick = function (e) {
             console.log(`click Burger`);
-            doILink(props.options.action, props.options.transition, props.options.durationMs);
+            doIlink(props.options.action, props.options.transition, props.options.durationMs);
         };
 
         return {
@@ -55,7 +55,7 @@ export default {
 </style>
 <template>
     <div>
-        <div class="is-fixed">
+        <div class="is-fixed" id="fixedDiv">
             <button
                 @click="handleClick"
                 id="mgburgerbutton"
