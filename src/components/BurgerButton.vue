@@ -1,7 +1,7 @@
 <script>
 "use strict";
 import { onBeforeMount, onMounted, onUpdated } from "vue";
-import { doIlink } from "../lib/Ilink";
+import { doIlink } from "../lib/XIlink";
 
 export default {
     props: {

@@ -2,7 +2,7 @@
 import { reactive, ref, getCurrentInstance, nextTick } from "vue";
 import { defineComponent } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { doIlink } from "../lib/Ilink";
+import { doIlink } from "../lib/XIlink";
 import { getDrawer, setDrawer, getDrawerDuration, setDrawerDuration } from "@/lib/MgDrawer.js";
 
 export default defineComponent({

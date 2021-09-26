@@ -22,7 +22,9 @@ export default {
 </script>
 
 <template>
-    <div>
+    <div
+        style="background-image: url('/src/assets/images/igor-kasalovic-tNDvFkxkBHo-unsplash.jpg')"
+    >
         <burger-button :options="burgerOptions" />
         <mg-drawer></mg-drawer>
         <div class="m-5"></div>

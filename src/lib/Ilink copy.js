@@ -82,7 +82,7 @@ function toshadowFrame(div, shadowFrame) {
     }
 }
 
-export function doIlink(action, transition = "none", durationMs = 500) {
+export function doIlink(action, transition = "none", durationMs = 3000) {
     let shadow;
     let oldAppStyles = {};
     if (!app) app = document.getElementById("app");
@@ -140,8 +140,8 @@ export function doIlink(action, transition = "none", durationMs = 500) {
         }
     }
 
-    // if (transition == "none") action();
-    if (1) {
+    if (transition == "none") action();
+    if (0) {
         if (1) action(); // perform action
 
         if (transition != "none") {

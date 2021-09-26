@@ -82,7 +82,10 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div class="home">
+    <div
+        class="home"
+        style="background-image: url('/src/assets/images/josh-rose-9YQGFzg0RiM-unsplash.jpg')"
+    >
         <burger-button :options="burgerOptions" />
         <button class="button is-medium is-primary is-light behind-burger">
             <router-ilink to="/builder" transition="up" label="Builder"></router-ilink>
