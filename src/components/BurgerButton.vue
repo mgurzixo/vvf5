@@ -1,7 +1,7 @@
 <script>
 "use strict";
 import { onBeforeMount, onMounted, onUpdated } from "vue";
-import { doIlink } from "../lib/XIlink";
+import { doIlink } from "../lib/Ilink";
 
 export default {
     props: {
@@ -45,8 +45,8 @@ export default {
 </script>
 
 <style lang="scss">
-.is-fixed {
-    position: fixed;
+.is-absolute {
+    position: absolute;
     z-index: 990;
     top: 0;
     left: 0;
@@ -54,17 +54,15 @@ export default {
 }
 </style>
 <template>
-    <div>
-        <div class="is-fixed" id="fixedDiv">
-            <button
-                @click="handleClick"
-                id="mgburgerbutton"
-                class="button is-size-4 is-circular has-text-white has-background-grey"
-            >
-                <span class="icon fa-lg">
-                    <i :class="options.iconClass"></i>
-                </span>
-            </button>
-        </div>
+    <div class="is-absolute" id="absoluteDiv">
+        <button
+            @click="handleClick"
+            id="mgburgerbutton"
+            class="button is-size-4 is-circular has-text-white has-background-grey"
+        >
+            <span class="icon fa-lg">
+                <p :class="options.iconClass"></p>
+            </span>
+        </button>
     </div>
 </template>

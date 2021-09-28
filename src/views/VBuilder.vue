@@ -52,10 +52,8 @@ export default defineComponent({
 });
 </script>
 <template>
-    <div
-        class="home"
-        style="background-image: url('/src/assets/images/tatum-bergen-TIiH48yOLDU-unsplash.jpg')"
-    >
+    <!-- style="background-image: url('/src/assets/images/tatum-bergen-TIiH48yOLDU-unsplash.jpg')" -->
+    <div class="home">
         <burger-button :options="burgerOptions" />
         <button class="button is-medium is-primary is-light behind-burger">
             <router-ilink to="/form" transition="down" label="Form"></router-ilink>

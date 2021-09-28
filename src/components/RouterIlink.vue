@@ -2,7 +2,7 @@
 import { reactive, ref, getCurrentInstance, nextTick } from "vue";
 import { defineComponent } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { doIlink } from "../lib/XIlink";
+import { doIlink } from "../lib/Ilink";
 import { getDrawer, setDrawer, getDrawerDuration, setDrawerDuration } from "@/lib/MgDrawer.js";
 
 export default defineComponent({
@@ -26,6 +26,10 @@ export default defineComponent({
         resetDrawer: {
             type: Boolean,
             default: true,
+        },
+        button: {
+            type: String,
+            default: "",
         },
     },
     setup(props) {
@@ -51,5 +55,6 @@ export default defineComponent({
 </script>
 
 <template>
-    <a @click="handleClick">{{ label }}</a>
+    <button v-if="button" :class="button" @click="handleClick">{{ label }}</button>
+    <a v-else @click="handleClick">{{ label }}</a>
 </template>

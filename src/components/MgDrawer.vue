@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- Must be first! -->
         <div
             class="mgdrawer-overlay"
             :class="{ 'is-closed': !isDrawerActive }"
@@ -7,6 +8,7 @@
             :style="overlayDisplay"
             @click="handleOverlayClick($event)"
         ></div>
+        <!-- Must be second! -->
         <div
             class="mgdrawer has-background-dark"
             :class="{ 'is-closed': !isDrawerActive }"
@@ -88,7 +90,6 @@ export default defineComponent({
 });
 </script>
 
-<script setup></script>
 <style lang="scss">
 // inspired from https://github.com/lucperkins/bulma-drawer
 
@@ -107,12 +108,13 @@ $mgdrawer-z-index: 1000 !default;
     @include transition;
     background-color: $mgdrawer-background-color;
     z-index: $mgdrawer-z-index;
-    position: fixed;
+    position: absolute;
     top: 0;
     width: $mgdrawer-width;
     left: 0;
     height: 100vh;
     overflow: auto;
+    overscroll-behavior: contain;
     opacity: $mgdrawer-opacity;
     &.is-closed {
         left: -#{$mgdrawer-width};
@@ -121,9 +123,10 @@ $mgdrawer-z-index: 1000 !default;
 
 .mgdrawer-overlay {
     @include transition;
-    position: fixed;
+    position: absolute;
     width: 100vw;
     height: 100vh;
+    overflow: hidden;
     top: 0;
     left: 0vw;
     background-color: rgba(0, 0, 0, 0.3);
